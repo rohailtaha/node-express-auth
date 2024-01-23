@@ -41,7 +41,6 @@ passport.deserializeUser(async (id, done) => {
 
 passport.use(
   new LocalStrategy(async function verify(username, password, cb) {
-    console.log(username, password);
     const db = await getDatabase();
     try {
       const user = await db.collection('users').findOne({
