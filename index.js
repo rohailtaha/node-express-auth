@@ -7,10 +7,10 @@ const passport = require('passport');
 const app = express();
 const { hashPassword, verifyPassword } = require('./lib/utils');
 const expressSession = require('express-session');
-const { ObjectId } = require('mongodb');
 const path = require('path');
 const { isAuthenticated } = require('./middlewares/authentication');
 const { isGuest } = require('./middlewares/guest');
+const MongoStore = require('connect-mongo');
 
 app.use(express.json());
 app.use(
@@ -21,22 +21,26 @@ app.use(
 
 app.use(
   expressSession({
-    secret: 'hello',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.DATABASE_CONNECTION,
+      dbName: process.env.DATABASE_NAME,
+    }),
   })
 );
 
 passport.serializeUser((user, done) => {
+  // This function will only be called on login (we login when we signup and login)
+  // The value provided to callback will be set in the session.passport.user property
+  // The session id will be stored in the cookie
   done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
-  const db = await getDatabase();
-  const user = await db.collection('users').findOne({
-    _id: new ObjectId(id),
-  });
-  done(null, { email: user.email, _id: user._id });
+  // the value provided to callback will be set to req.user
+  done(null, { _id: id });
 });
 
 passport.use(
@@ -46,11 +50,12 @@ passport.use(
       const user = await db.collection('users').findOne({
         email: username,
       });
+      if (!user) return cb(null, false);
       const passwordVerified = await verifyPassword(password, user.password);
       if (passwordVerified) {
-        cb(null, { email: user.email, _id: user._id });
+        cb(null, { _id: user._id.toString() });
       } else {
-        throw new Error('Invalid password');
+        cb(null, false);
       }
     } catch (err) {
       cb(err, null);
@@ -122,7 +127,7 @@ app.post(
         _id: insertedId,
       });
 
-      req.login({ email: user.email, _id: user._id }, err => {
+      req.login({ _id: user._id.toString() }, err => {
         if (err) return res.status(500).end();
         return res.redirect('/home');
       });
