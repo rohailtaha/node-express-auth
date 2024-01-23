@@ -3,9 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Singup Page</title>
+    <title>Signup Page</title>
   </head>
   <body>
-    <h1>Singup to the website</h1>
+    <header>
+      <a href="/login">Login</a>
+    </header>
+    <h1>Signup to the website</h1>
+    <form>
+      <div>
+        <label for="full-name">Full Name</label>
+        <input type="text" id="full-name" name="name" />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" />
+      </div>
+      <button type="submit" id="submit-btn">Submit</button>
+    </form>
+    <script src="/signup.js"></script>
   </body>
 </html>
