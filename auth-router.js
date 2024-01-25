@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 const { passport } = require('./passport-config');
 const { hashPassword } = require('./lib/utils');
+const { getDatabase } = require('./lib/database');
 
 router.post(
   '/auth/signup',
