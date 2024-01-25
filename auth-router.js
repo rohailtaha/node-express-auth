@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 const { passport } = require('./passport-config');
+const { hashPassword } = require('./lib/utils');
 
 router.post(
   '/auth/signup',
