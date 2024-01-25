@@ -56,6 +56,8 @@ app.get('/about', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'about.html'));
 });
 
-app.listen(3000, () => {
-  console.log('server started on port 3000');
+const PORT = process.env.NODE_ENV === 'production' ? 443 : 3000;
+
+app.listen(PORT, () => {
+  console.log(`server started on port ${PORT}`);
 });
