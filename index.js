@@ -11,13 +11,13 @@ const { isAuthenticated } = require('./middlewares/authentication');
 const cors = require('cors');
 
 const corsOptions = {
-  origin: ['http://localhost:5173/'],
+  origin: 'http://localhost:5173',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   preflightContinue: false,
   optionsSuccessStatus: 204,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(
   express.urlencoded({
