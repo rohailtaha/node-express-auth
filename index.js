@@ -11,9 +11,9 @@ const { isAuthenticated } = require('./middlewares/authentication');
 const cors = require('cors');
 
 const corsOptions = {
-  origin: '*', // or '*' for all origins
+  origin: false, // or '*' for all origins
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  credentials: true, // Allow credentials if needed
+  // credentials: true, // Allow credentials if needed
   optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
 
