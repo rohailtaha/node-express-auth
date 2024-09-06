@@ -50,6 +50,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(authRouter);
 
+app.post('/test', (req, res) => {
+  res.status(200).json({ hello: 'hello post' });
+});
+
+app.get('/test', (req, res) => {
+  res.status(200).json({ hello: 'hello get' });
+});
+
 app.get('/login', isGuest, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
