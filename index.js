@@ -10,7 +10,14 @@ const { isGuest } = require('./middlewares/guest');
 const { isAuthenticated } = require('./middlewares/authentication');
 const cors = require('cors');
 
-app.use(cors());
+const corsOptions = {
+  origin: '*', // or '*' for all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+  credentials: true, // Allow credentials if needed
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(
   express.urlencoded({
