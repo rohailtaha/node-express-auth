@@ -10,12 +10,7 @@ const { isGuest } = require('./middlewares/guest');
 const { isAuthenticated } = require('./middlewares/authentication');
 const cors = require('cors');
 
-const corsOptions = {
-  credentials: true,
-  origin: true,
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(
   express.urlencoded({
