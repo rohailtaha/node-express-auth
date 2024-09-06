@@ -19,7 +19,9 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept'
   );
   res.header('Access-Control-Allow-Credentials', 'true');
+  console.log('reached');
   if (req.method === 'OPTIONS') {
+    console.log('reached2');
     return res.sendStatus(200);
   }
   next();
