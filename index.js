@@ -10,14 +10,14 @@ const { isGuest } = require('./middlewares/guest');
 const { isAuthenticated } = require('./middlewares/authentication');
 const cors = require('cors');
 
-const corsOptions = {
-  origin: false, // or '*' for all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  // credentials: true, // Allow credentials if needed
-  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
-};
+// const corsOptions = {
+//   origin: '*', // or '*' for all origins
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+//   credentials: true, // Allow credentials if needed
+//   optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(
   express.urlencoded({
